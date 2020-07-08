@@ -1,0 +1,38 @@
+@font-face {
+    font-family: "WelcomeSummer";
+    src: url("Assets/Fonts/Welcome Summer.woff") format("woff")
+}
+@font-face {
+    font-family: "MakeSummerFun";
+    src: url("Assets/Fonts/Make Summer Fun.woff") format("woff")
+}
+
+
+/*makes sizing our elements based off a certain width easier to do */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100vh;
+}
+body {
+    margin: 0;
+    background: radial-gradient(#fc03cf,#6b0356);
+}
+
+.page-title {
+    color: #fab9ee;
+    font-family: MakeSummerFun;
+    font-weight: normal;
+    text-align: center;
+    font-size: 6em;
+
+}
+
+.game-info {
+    color: white; 
+    font-family: WelcomeSummer, serif;
+    font-weight: normal;
+    font-size: 3em;
+}
