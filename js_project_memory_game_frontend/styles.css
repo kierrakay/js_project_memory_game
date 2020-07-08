@@ -48,6 +48,7 @@ body {
     grid-gap: 10px;
     margin: 50px;
     justify-content: center;
+    perspective: 500px;
 }
 .card {
     position: relative;
@@ -67,7 +68,16 @@ body {
     border-radius: 12px;
     border-width: 5px;
     border-style: solid;
+    transition: transform 500ms ease-in-out;
 }
+
+/* .card:hover .card-back {
+    transform: rotateY(-180deg);
+}
+
+.card:hover .card-front{
+    transform: rotateY(0);
+} */
 
 .card.visible .card-back {
     transform: rotateY(-180deg);
@@ -91,8 +101,8 @@ body {
 .card-value {
     transition: transform 100ms ease-in-out;
     transform: scale(.9);
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
 }
 
 .card-front:hover .card-value {
