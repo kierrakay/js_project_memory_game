@@ -83,9 +83,25 @@ body {
     transform: rotateY(-180deg);
 }
 
-.card.visible .card-front{
+.card.visible .card-front {
     transform: rotateY(0);
 } */
+
+.card:hover .card-value {
+    animation: dance 1s linear infinite 500ms;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-20deg);
+    }
+    75%{
+        transform: rotate(20deg);
+    }
+}
 
 .card-back {
     background-color: white;
