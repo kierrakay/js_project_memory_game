@@ -29,6 +29,11 @@ body {
     font-size: 6em;
 
 }
+.game-info-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+}
 
 .game-info {
     color: white; 
@@ -36,3 +41,79 @@ body {
     font-weight: normal;
     font-size: 3em;
 }
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    margin: 50px;
+    justify-content: center;
+}
+.card {
+    position: relative;
+    height: 175px;
+    width: 125px;
+}
+ 
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.card.visible .card-back {
+    transform: rotateY(-180deg);
+}
+
+.card.visible .card-front{
+    transform: rotateY(0);
+}
+
+.card-back {
+    background-color: white;
+    border-color: #fab9ee;
+}
+
+.card-front {
+    background-color: white;
+    border-color: #fab9ee;
+    transform: rotateY(180deg);
+}
+
+.card-value {
+    transition: transform 100ms ease-in-out;
+    transform: scale(.9);
+    width: 120px;
+    height: 120px;
+}
+
+.card-front:hover .card-value {
+    transform: scale(1);
+    /* transform: translateY(0);
+    width: 120px;
+    height: 120px; */
+} 
+
+
+
+.sun {
+    width: 100px;
+    height: 100px;
+    align-self: initial;
+    /* transform: translate(-3px); */
+    transition: transform 100ms ease-in-out;
+    /* transition: width 100ms ease-in-out, height 100ms ease-in-out; */
+}
+.card-back:hover .sun {
+    transform: translateY(0);
+    width: 120px;
+    height: 120px;
+} 
