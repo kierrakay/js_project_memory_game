@@ -18,16 +18,22 @@ html {
 }
 body {
     margin: 0;
-    background: radial-gradient(#fc03cf,#6b0356);
+    background: radial-gradient(#f12ccd,#6b0356);
+    /* background-image: url("Assets/Images/watermelon.jpg"); */
+
 }
+
 
 .page-title {
     color: #fab9ee;
     font-family: MakeSummerFun;
     font-weight: normal;
     text-align: center;
+    width: 100%;
+    height: 280px;
     font-size: 6em;
-
+    /* background-color: white; */
+    
 }
 .game-info-container {
     grid-column: 1 / -1;
@@ -36,24 +42,47 @@ body {
 }
 
 .game-info {
-    color: white; 
-    font-family: WelcomeSummer, serif;
+    color: white;
+    font-family: WelcomeSummer;
     font-weight: normal;
     font-size: 3em;
+    /* background-color: white; */
 }
+
+.top-scores {
+  
+    text-decoration:  underline;
+   
+}
+
+.top-scores:hover {
+        float:left;  
+        background:Red; 
+        width:20%; 
+        height:280px; 
+        text-align: center;
+        text-decoration:  underline;
+       
+}
+
 
 .game-container {
     display: grid;
     grid-template-columns: repeat(5, auto);
-    grid-gap: 10px;
+    grid-gap: 20px;
     margin: 50px;
     justify-content: center;
     perspective: 500px;
+    /* float: left;
+    width:53%; 
+    height:280px;  */
+
 }
-.card {
+ .card {
     position: relative;
     height: 175px;
     width: 125px;
+    
 }
  
 .card-face {
@@ -71,24 +100,67 @@ body {
     transition: transform 500ms ease-in-out;
 }
 
- .card:hover .card-back {
+ /* .card:hover .card-back {
     transform: rotateY(-180deg);
 }
 
 .card:hover .card-front{
     transform: rotateY(0);
-} 
+}  */
 
-/* .card.visible .card-back {
+ .card.visible .card-back {
     transform: rotateY(-180deg);
 }
 
 .card.visible .card-front {
     transform: rotateY(0);
+} 
+
+/* .card.matched .card-value {
+    animation: dance 6s linear infinite 500ms;
 } */
 
-.card:hover .card-value {
-    animation: dance 1s linear infinite 500ms;
+
+
+
+.card.matched .card-value {
+    animation: dance 1.5s linear infinite 500ms;
+}
+
+.overlay-text {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    color: pink;
+    font-family: WelcomeSummer;
+}
+.overlay-text-small {
+font-size: .3em;
+}
+
+.overlay-text.visible {
+    display: flex;
+    flex-direction: column;
+    animation: overlay-grow 500ms forwards;
+}
+
+@keyframes overlay-grow{
+    from {
+        background-color: rgba(0,0,0,0);
+        font-size: 0;
+    }
+    to {
+    
+        background-color: rgba(0,0,0,.8);
+        font-size: 10em;
+    }
 }
 
 @keyframes dance {
@@ -101,8 +173,9 @@ body {
     75%{
         transform: rotate(20deg);
     }
-}
+} 
 
+/* back is really the front */
 .card-back {
     background-color: white;
     border-color: #fab9ee;
@@ -114,18 +187,19 @@ body {
     transform: rotateY(180deg);
 }
 
+/* This is for our random matching images */
 .card-value {
-    transition: transform 100ms ease-in-out;
-    transform: scale(.9);
+    transition: transform 100ms ease-in-out; 
+    /* transform: scale(.9); */
     width: 100px;
     height: 100px;
 }
 
 .card-front:hover .card-value {
-    transform: scale(1);
-    /* transform: translateY(0);
-    width: 120px;
-    height: 120px; */
+    transform: scale(1); 
+    transform: translateY(0);
+    /* width: 120px;
+    height: 120px;  */
 } 
 
 
@@ -143,3 +217,14 @@ body {
     width: 120px;
     height: 120px;
 } 
+
+@media(max-width: 600px) {
+    .game-container {
+    grid-template-columns: repeat(2, auto);
+    }
+
+.game-info-container {
+    flex-direction: column;
+    align-items: center;
+    }
+}
