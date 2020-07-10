@@ -25,11 +25,11 @@ class AudioController {
         this.matchSound.play();
     }
     victory() {
-        this.stopMusic()
+        this.stopMusic();
         this.victorySound.play();
     }
     gameover() {
-        this.stopMusic()
+        this.stopMusic();
         this.gameOverSound.play();
     }
 }
