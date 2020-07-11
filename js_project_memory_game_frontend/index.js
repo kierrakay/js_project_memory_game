@@ -37,9 +37,9 @@ class AudioController {
 
 //this only gets called when you create a new object of this game
 class MixOrMatch {
-    constructor(totalTime,cards){
-        this.cardsArray = cards;
+    constructor(totalTime,cards,totalPoints){
         this.totalTime = totalTime;
+        this.cardsArray = cards;
         this.timeRemaining = totalTime
         this.timer = document.getElementById('time-remaining');
         this.ticker = document.getElementById('flips');
@@ -50,7 +50,7 @@ class MixOrMatch {
     startGame(){
         this.cardToCheck = null;
         this.totalClicks = 0;
-        this.totalPoints = 0;
+        this.pointsGained = 0;
         this.timeRemaining = this.totalTime;
         this.matchedCards = [];
         this.busy = true;
@@ -64,6 +64,7 @@ class MixOrMatch {
         this.hideCards();
         this.timer.innerText = this.timeRemaining;
         this.ticker.innerText = this.totalClicks;
+        this.points.innerText = this.pointsGained;
     }
 
     hideCards() {
@@ -101,9 +102,9 @@ class MixOrMatch {
         this.matchedCards.push(card2);
         card1.classList.add('matched');
         card2.classList.add('matched');
+        this.pointsGained++;
+        this.points.innerText = this.pointsGained;
         this.audioController.match();
-        this.totalPoints++;
-        this.points.innerText = this.totalPoints;
         if(this.matchedCards.length === this.cardsArray.length)
         this.victory();
     }
@@ -161,7 +162,7 @@ class MixOrMatch {
 function ready() {
     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
     let cards = Array.from(document.getElementsByClassName('card'));
-    let game = new MixOrMatch(100, cards);
+    let game = new MixOrMatch(10, cards);
 
     overlays.forEach(overlay => {
         overlay.addEventListener('click', () => {
