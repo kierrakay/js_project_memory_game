@@ -43,12 +43,14 @@ class MixOrMatch {
         this.timeRemaining = totalTime
         this.timer = document.getElementById('time-remaining');
         this.ticker = document.getElementById('flips');
+        this.points = document.getElementById('points');
         this.audioController = new AudioController();
     }
     //this start game gets called more times
     startGame(){
         this.cardToCheck = null;
         this.totalClicks = 0;
+        this.totalPoints = 0;
         this.timeRemaining = this.totalTime;
         this.matchedCards = [];
         this.busy = true;
@@ -90,7 +92,7 @@ class MixOrMatch {
             this.cardMatch(card, this.cardToCheck);
         else
             this.cardMisMatch(card, this.cardToCheck);
-
+         
             this.cardToCheck = null;
     }
 
@@ -100,6 +102,8 @@ class MixOrMatch {
         card1.classList.add('matched');
         card2.classList.add('matched');
         this.audioController.match();
+        this.totalPoints++;
+        this.points.innerText = this.totalPoints;
         if(this.matchedCards.length === this.cardsArray.length)
         this.victory();
     }
