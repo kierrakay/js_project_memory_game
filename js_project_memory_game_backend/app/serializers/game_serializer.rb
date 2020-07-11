@@ -1,4 +1,4 @@
 class GameSerializer < ActiveModel::Serializer
-    attributes :id, :points, :time
+    attributes :id, :point, :time
     belongs_to :user
   end
