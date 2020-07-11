@@ -65,7 +65,7 @@ class MixOrMatch {
     }
 
     hideCards() {
-        this.cardsArray.forEach(card =>{
+        this.cardsArray.forEach(card => { 
             card.classList.remove('visible');
             card.classList.remove('matched')
         });
@@ -78,9 +78,45 @@ class MixOrMatch {
             this.ticker.innerText = this.totalClicks;
             card.classList.add('visible');
 
-            //if statement
+            if(this.cardToCheck)
+                this.checkForCardMatched(card);
+            else 
+            this.cardToCheck = card;
         }
     }
+
+    checkForCardMatched(card){
+        if(this.getCardType(card) === this.getCardType(this.cardToCheck))
+            this.cardMatch(card, this.cardToCheck);
+        else
+            this.cardMisMatch(card, this.cardToCheck);
+
+            this.cardToCheck = null;
+    }
+
+    cardMatch(card1, card2) {
+        this.matchedCards.push(card1);
+        this.matchedCards.push(card2);
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        this.audioController.match();
+        if(this.matchedCards.length === this.cardsArray)
+        this.victory();
+    }
+
+    cardMisMatch(card1, card2) {
+        this.busy = true;
+        setTimeout(() => {
+            card1.classList.remove('visible')
+            card2.classList.remove('visible')
+            this.busy = false;
+        }, 1000);
+    }
+
+    getCardType(card){
+        return card.getElementsByClassName('card-value')[0].src;
+    }
+
     startCountDown() {
         return setInterval(() => {
             this.timeRemaining--;
@@ -97,6 +133,12 @@ class MixOrMatch {
 
 }
 
+    victory() {
+        clearInterval(this.countDown);
+        this.audioController.victory();
+        document.getElementById('victory-text').classList.add('visible');
+    }
+
     // fischer yates shuffling algorithm
     shuffleCards() {
         for(let i = this.cardsArray.length - 1; i > 0; i--) {
@@ -107,10 +149,7 @@ class MixOrMatch {
     }
 
     canFlipCard(card) {
-        return true;
-        //can flip card if all of these are false which will result to a value of true
-        // return (!this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck);
-
+        return (!this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck);
     }
 }
 
@@ -118,7 +157,7 @@ class MixOrMatch {
 function ready() {
     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
     let cards = Array.from(document.getElementsByClassName('card'));
-    let game = new MixOrMatch(5, cards);
+    let game = new MixOrMatch(100, cards);
 
     overlays.forEach(overlay => {
         overlay.addEventListener('click', () => {
