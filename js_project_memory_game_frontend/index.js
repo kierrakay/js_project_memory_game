@@ -52,13 +52,27 @@ class MixOrMatch {
         this.timeRemaining = this.totalTime;
         this.matchedCards = [];
         this.busy = true;
+
+        this.shuffleCards();
     }
 
     flipCard(card) {
-        if(this.canFlipCard(card)){
+        if(this.canFlipCard(card)) {
             this.audioController.flip();
+            this.totalClicks++;
+            this.ticker.innerText = this.totalClicks;
+            card.classList.add('visible');
 
+            //if statement
         }
+    }
+    // fischer yates shuffling algorithm
+    shuffleCards() {
+        for(let i = this.cardsArray.length - 1; i > 0; i--) {
+            let randomIndex = Math.floor(Math.random() * (i+1));
+            this.cardsArray[randomIndex].style.order = 1;
+            this.cardsArray[i].style.order = randomIndex;
+;        }
     }
 
     canFlipCard(card) {
