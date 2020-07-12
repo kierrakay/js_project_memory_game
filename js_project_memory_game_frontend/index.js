@@ -1,3 +1,76 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // console.log('hey')
+    User.createUser()
+
+})
+
+
+class User {
+    constructor(user){
+        this.id = user.id;
+        this.username = user.username;
+        this.games = user.games;
+    }
+
+
+    static createUser() {
+        // console.log('hey')
+        let newUserForm = document.getElementById('new-user-form')
+        newUserForm.addEventListener('submit', function(e){
+            e.preventDefault()
+            fetch('http://localhost:3000/api/v1/users', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept" : "application/json"
+                },
+                body: JSON.stringify({
+                    user: {
+                        username: e.target.children[1].value
+                    }
+                })
+            })
+            .then (resp => resp.json())
+            .then(user => {
+                let newUser = new User(user)
+                // console.log(newUser)
+                newUser.ready()
+            })
+        })
+    }
+
+
+
+
+        ready() {
+            console.log('this is a new user')
+        let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+        let cards = Array.from(document.getElementsByClassName('card'));
+        let game = new MixOrMatch(15, cards, this.id);
+
+            overlays.forEach(overlay => {
+                overlay.addEventListener('click', () => {
+                    overlay.classList.remove('visible');
+                    game.startGame(this.id);
+                
+                });
+            });
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    game.flipCard(card);
+                });
+            });
+        }
+}
+
+
+
+
+
+
+
+
+
 class AudioController {
     constructor() {
         this.bgMusic = new Audio('Assets/Audio/happy.mp3');
@@ -150,7 +223,7 @@ class MixOrMatch {
             let randomIndex = Math.floor(Math.random() * (i+1));
             this.cardsArray[randomIndex].style.order = 1;
             this.cardsArray[i].style.order = randomIndex;
-;        }
+       }
     }
 
     canFlipCard(card) {
@@ -159,29 +232,27 @@ class MixOrMatch {
 }
 
 
-function ready() {
-    let overlays = Array.from(document.getElementsByClassName('overlay-text'));
-    let cards = Array.from(document.getElementsByClassName('card'));
-    let game = new MixOrMatch(10, cards);
+// function ready() {
+//     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+//     let cards = Array.from(document.getElementsByClassName('card'));
+//     let game = new MixOrMatch(10, cards);
 
-    overlays.forEach(overlay => {
-        overlay.addEventListener('click', () => {
-            overlay.classList.remove('visible');
-            game.startGame();
+//     overlays.forEach(overlay => {
+//         overlay.addEventListener('click', () => {
+//             overlay.classList.remove('visible');
+//             game.startGame();
         
-        });
-    });
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            game.flipCard(card);
-        });
-    });
-}
+//         });
+//     });
+//     cards.forEach(card => {
+//         card.addEventListener('click', () => {
+//             game.flipCard(card);
+//         });
+//     });
+// }
 
-if(document.readyState ==='loading') {
-    document.addEventListener('DOMContentLoaded',ready());
-} else {
-ready();
-}
-
-//
+// if(document.readyState ==='loading') {
+//     document.addEventListener('DOMContentLoaded', User.ready());
+// } else {
+// User.ready();
+// }
