@@ -43,24 +43,29 @@ class User {
 
 
         ready() {
-            console.log('this is a new user')
+            // console.log('this is a new user')
         let overlays = Array.from(document.getElementsByClassName('overlay-text'));
         let cards = Array.from(document.getElementsByClassName('card'));
         let game = new MixOrMatch(15, cards, this.id);
-
+        // console.log('this is a new user', this.id)
             overlays.forEach(overlay => {
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('visible');
                     game.startGame(this.id);
-                
+                    // console.log('gamestart', this.id)
                 });
             });
             cards.forEach(card => {
                 card.addEventListener('click', () => {
                     game.flipCard(card);
+                    console.log('flipcard', this.id)
                 });
             });
         }
+
+
+
+  //this is the bracket for user class      
 }
 
 
