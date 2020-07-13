@@ -1,83 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // console.log('hey')
-    User.createUser()
-
+    ready();
 })
 
-
-class User {
-    constructor(user){
-        this.id = user.id;
-        this.username = user.username;
-        this.games = user.games;
-    }
-
-
-    static createUser() {
-        // console.log('hey')
-        let newUserForm = document.getElementById('new-user-form')
-        newUserForm.addEventListener('submit', function(e){
-            e.preventDefault()
-            fetch('http://localhost:3000/api/v1/users', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept" : "application/json"
-                },
-                body: JSON.stringify({
-                    user: {
-                        username: e.target.children[1].value
-                    }
-                })
-            })
-            .then (resp => resp.json())
-            .then(user => {
-                let newUser = new User(user)
-                // console.log(newUser)
-                newUser.ready()
-            })
-        })
-    }
-
-
-
-
-        ready() {
-            // console.log('this is a new user')
-        let overlays = Array.from(document.getElementsByClassName('overlay-text'));
-        let cards = Array.from(document.getElementsByClassName('card'));
-        let game = new MixOrMatch(15, cards, this.id);
-        // console.log('this is a new user', this.id)
-            overlays.forEach(overlay => {
-                overlay.addEventListener('click', () => {
-                    overlay.classList.remove('visible');
-                    game.startGame(this.id);
-                    // console.log('gamestart', this.id)
-                });
-            });
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    game.flipCard(card);
-                    console.log('flipcard', this.id)
-                });
-            });
-        }
-
-
-
-  //this is the bracket for user class      
-}
-
-
-
-
-
-
-
-
-
 class AudioController {
-    constructor() {
+    constructor(user) {
+        // super(user.id)
         this.bgMusic = new Audio('Assets/Audio/happy.mp3');
         this.flipSound = new Audio('Assets/Audio/flipcard.wav');
         this.matchSound = new Audio('Assets/Audio/matched.mp3');
@@ -87,7 +14,7 @@ class AudioController {
         this.bgMusic.loop = true;
        
     }
-
+   
     startMusic() {
         this.bgMusic.play();
     }
@@ -114,8 +41,9 @@ class AudioController {
 }
 
 //this only gets called when you create a new object of this game
-class MixOrMatch {
-    constructor(totalTime,cards,totalPoints){
+class MixOrMatch  {
+    constructor(totalTime,cards){
+        // super(user.id)
         this.totalTime = totalTime;
         this.cardsArray = cards;
         this.timeRemaining = totalTime
@@ -123,6 +51,7 @@ class MixOrMatch {
         this.ticker = document.getElementById('flips');
         this.points = document.getElementById('points');
         this.audioController = new AudioController();
+        // this.cardToCheck = null;
     }
     //this start game gets called more times
     startGame(){
@@ -232,32 +161,33 @@ class MixOrMatch {
     }
 
     canFlipCard(card) {
+        console.log(this.matchedCards)
         return (!this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck);
     }
 }
 
 
-// function ready() {
-//     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
-//     let cards = Array.from(document.getElementsByClassName('card'));
-//     let game = new MixOrMatch(10, cards);
+function ready() {
+    let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+    let cards = Array.from(document.getElementsByClassName('card'));
+    let game = new MixOrMatch(10, cards);
 
-//     overlays.forEach(overlay => {
-//         overlay.addEventListener('click', () => {
-//             overlay.classList.remove('visible');
-//             game.startGame();
+    overlays.forEach(overlay => {
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('visible');
+            game.startGame();
         
-//         });
-//     });
-//     cards.forEach(card => {
-//         card.addEventListener('click', () => {
-//             game.flipCard(card);
-//         });
-//     });
-// }
+        });
+    });
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            game.flipCard(card);
+        });
+    });
+}
 
 // if(document.readyState ==='loading') {
-//     document.addEventListener('DOMContentLoaded', User.ready());
+//     document.addEventListener('DOMContentLoaded', ready());
 // } else {
-// User.ready();
+// ready();
 // }
